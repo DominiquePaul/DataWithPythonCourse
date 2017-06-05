@@ -32,7 +32,7 @@ os.chdir("/Users/dominiquepaul/xJob/Python")
 
 # lets load our csv file
 # depending on how your data is saved, you might have to use a comma or something else a separator
-rawXrates = pd.read_csv('datanew.csv', sep = ";")
+rawXrates = pd.read_csv('dataXrates.csv', sep = ";")
 
 print(rawXrates)
 
