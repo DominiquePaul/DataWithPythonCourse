@@ -15,16 +15,16 @@
 rm(list = ls()) # Empty workspace to start with a "clean sheet"
 
 # REPLACE THE WORKING DIRECTORY BELOW WITH THE ONE FOR YOUR DEVICE
-setwd("/Users/dominiquepaul/xJob/DataWithPythonCourse")
+setwd("/Users/dominiquepaul/xJob/1-DataWithPythonCourse/4-Data")
 #load("rawExpImp (1).RData")
 
 # Read files, adjust file names to your situation!
 
 rawXrates = read.csv(file = 
-   "dataXrates.csv", sep = ";")
+   "dataXrates.csv", sep = ",")
 
 rawAussen = read.csv(file = 
-    "aussenhandel_snb.csv", sep = ";")
+    "aussenhandel_snb1.csv", sep = ",")
 
 # If you are having troubles with the data, use the following
 
@@ -119,17 +119,14 @@ aussen =
 # Bring data into wide format
 library(reshape2)
 xrates1= dcast(xrates, timeID ~ D1, value.var = "Value")
-xrates
 xrates1
-
 aussen1 = dcast(aussen, timeID ~ D0 + D1 + D2, value.var = "Value")
-aussen
-aussen1
+
 # Merge the two data sets (NEW!!!!)
 # DA stands for "Data for Analysis"
-DA = merge(xrates, aussen, by = "timeID")
+DA = merge(xrates1, aussen1, by = "timeID")
 # The "by" argument contains the so-called "key".
-
+DA[[curr]] = as.double(DA[[curr]])
 
 # [FOR LATER] convert to growth rates
 DA[[curr]] = toGrowth(DA[[curr]])
@@ -141,8 +138,7 @@ DA[[curr]] = toGrowth(DA[[curr]])
 # Variable name for exports/imports
 names(DA)
 vn = paste(tradeDir, goodsType, measure, sep = "_")
-
-
+DA
 
 # Make a plot
 plot(DA[[curr]], DA[[vn]], 

@@ -9,7 +9,7 @@ rm(list = ls()) # Empty workspace to start with a "clean sheet"
 
 # REPLACE THE WORKING DIRECTORY BELOW WITH THE ONE FOR YOUR DEVICE
 #setwd("D:/Dropbox/Mac&Surf/Programmierkurs Dropb/Data")
-setwd("/Users/Johannes/Dropbox/Mac&Surf/Programmierkurs Dropb/Data")
+setwd("/Users/dominiquepaul/xJob/DataWithPythonCourse")
 
 
 load("dataForAnalysis.RData")

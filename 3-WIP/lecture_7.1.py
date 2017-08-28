@@ -1,27 +1,36 @@
+import os
+import pandas as pd
 
-########################################################################
-# LECTURE 7: Redoing analysis from Lecture 6, but with dressed-up data #
-########################################################################
+os.chdir("/Users/dominiquepaul/xJob/DataWithPythonCourse/data")
 
-# This is the second of the files for Lecture 7
+#data1 = pd.read_csv("data_for_analysis.csv")
 
-rm(list = ls()) 
-
-# REPLACE THE WORKING DIRECTORY BELOW WITH THE ONE FOR YOUR DEVICE
-#setwd("D:/Dropbox/Mac&Surf/Programmierkurs Dropb/Data")
-setwd("/Users/Johannes/Dropbox/Mac&Surf/Programmierkurs Dropb/Data")
-
-load("dataForAnalysis.RData")
+aussen = pd.read_csv("aussenhandel_snb1.csv")
+xrates = pd.read_csv("dataXrates1.csv")
 
 # SET PARAMETERS HERE
 ######################
 # These for lines just so you can get
 # what the potential parameter values can be
-unique(dataAussen$D0)
-unique(dataAussen$D1)
-unique(dataAussen$D2)
-unique(dataXrates$D1)
+aussen.D0.unique
+aussen.D1.unique
+aussen.D2.unique
 
+xrates.D1.unique
+
+
+startYear = 2000
+curr = xrates.D1.unique[1] # A trick to avoid typing variable names
+tradeDir = "Ausfuhr"  
+goodsType = aussen.D1.unique[1]
+measure = "Wert in Millionen Franken"
+saveGraph = "no"
+
+
+
+
+
+"""
 startYear = 2000
 curr = unique(dataXrates$D1)[1] # A trick to avoid typing variable names
 tradeDir = "Ausfuhr"  
@@ -322,4 +331,10 @@ library(xtable)
 options(xtable.comment = FALSE)
 tab = xtable(s)
 print(tab, type="latex")
+
+
+"""
+
+
+
 

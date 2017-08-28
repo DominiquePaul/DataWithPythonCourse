@@ -3,24 +3,22 @@
 # csv files and and manipulating them  #
 ########################################
 
-# Python is a general purpose language and therefore we often have to access packages
+# as mentioned before Python is a general purpose language and therefore we often have to access packages
 # when doing certain things
 
 # to access our working directory we for example have to imoport the os package,
 # we do this via the import command followed by the package name
 import os
-
-# to work with data frames we are going to need the pandas package
+# you already know this one
 import pandas as pd
-
 # we are going to need this to be able to plot data later
 import matplotlib.pyplot as plt
-
 
 # Set the working directory to the folder
 # where you have the csv files from the SNB
 
-os.chdir("/Users/dominiquepaul/xJob/Python")
+os.chdir("/Users/dominiquepaul/xJob/1-DataWithPythonCourse/4-Data/")
+# change this to your directory!!!
 # os.chdir("YOUR DIRECTORY")
 
 # Note the forward slashes in the directory!
@@ -31,8 +29,8 @@ os.chdir("/Users/dominiquepaul/xJob/Python")
 # os.chdir("D:/Programmierkurs/Data")
 
 # lets load our csv file
-# depending on how your data is saved, you might have to use a comma or something else a separator
-rawXrates = pd.read_csv('dataXrates.csv', sep = ";")
+# depending on how your data is saved, you might have to use a semi colon or something else a separator
+rawXrates = pd.read_csv('dataXrates.csv', sep = ",")
 
 print(rawXrates)
 
@@ -40,28 +38,28 @@ print(rawXrates)
 # to infer the type of object we can use type()
 # because data frames are not an own object in python, the name of the object which will
 # be returned is a so called pandas (the package we are using) data frame
-type(rawXrates)
+print(type(rawXrates))
 
 # Get the names of the columns ("variables"
 # in the statistical sense)
-list(rawXrates)
+print(list(rawXrates))
 # or 
-rawXrates.columns
+print(rawXrates.columns)
 
 # You can use the names to get a column
-rawXrates["Date"]
+print(rawXrates["Date"])
 
 # to print only the first x rows we can use the head function (in this case the first 10)
-rawXrates["Date"].head(10)
+print(rawXrates["Date"].head(10))
 # we can also look at the last x rows by using the tail function
-rawXrates.tail(5)
+print(rawXrates.tail(5))
 
 # Use this trick to select only the variables you are interested in
 varList = ["Date", "D0", "D1", "Value"]
 
 xRates = rawXrates[varList]
 
-xRates["Date"].head(10)
+print(xRates["Date"].head(10))
 
 # So we got rid of the empty columns!
 # lets save the new data as a csv to access later

@@ -8,11 +8,11 @@ import statsmodels.formula.api as smf
 # Set the working directory to the folder
 # where you have the csv files from the SNB
 
-os.chdir("/Users/dominiquepaul/xJob/DataWithPythonCourse")
+os.chdir("/Users/dominiquepaul/xJob/1-DataWithPythonCourse/4-Data/")
 # os.chdir("YOUR DIRECTORY")
 
 # you might have to change the separator
-rawXrates = pd.read_csv('dataXrates1.csv', sep = ",")
+rawXrates = pd.read_csv('dataXrates.csv', sep = ",")
 rawAussen = pd.read_csv('aussenhandel_snb1.csv', sep = ",")
 
 # we convert our non-numeric values to numbers
@@ -33,20 +33,20 @@ curr = "EUR1"
 
 tradeDir = "A"  
 # Direction of trade               
- # Values are E (Einfuhr)                 
- # and A (Ausfuhr)                
- #run rawAussen.D0.unique() for overview
+# Values are E (Einfuhr)                 
+# and A (Ausfuhr)                
+# run rawAussen.D0.unique() for overview
  
 goodsType = "MAE" 
 # run rawAussen.D1.unique()
 
 measure = "R" 
-#run rawAussen.D2.unique()
+# run rawAussen.D2.unique()
 
 
 
 a = rawXrates.iloc[0:20, :]
-a
+print(a)
 a.head(-1)
 a.tail(-1)
 
@@ -97,10 +97,16 @@ aussen = rawAussen[(rawAussen.D0 == tradeDir) & (rawAussen.D1 == goodsType) &
 
                    
 # Bring data into wide format
+print(aussen.head())
 xrates_wide = xrates.pivot(index = "timeID", columns = "D1",  values = "Value")
-                   
-aussen_wide = pd.pivot_table(aussen, index='timeID', columns=['D0', 'D1', 'D2'], aggfunc=max)             
-  
+# print(xrates_wide.head()) 
+aussen["join"] = aussen["D0"] + "_" + aussen["D1"] + "_" + aussen["D2"]
+aussen_wide = aussen.pivot(index="timeID", columns="join", values = "Value").reset_index()
+
+# aussen_wide = pd.pivot_table(aussen, index='timeID', columns=['D0', 'D1', 'D2'], aggfunc=max)             
+# print(aussen_wide)
+print(aussen_wide)
+
 
 
 ##################################
@@ -191,15 +197,15 @@ print(results.summary())
 # look at how CHANGES in exchanges rates
 # affect CHANGES in exports/imports
 
-# How calculate changes?
+# # How calculate changes?
 
-test = pd.Series(range(1,11))
-test.head(-1)
-test.tail(-1)
+# test = pd.Series(range(1,11))
+# test.head(-1)
+# test.tail(-1)
 
-d_test = (test.tail(-1).reset_index(drop = True)/test.head(-1).reset_index(drop = True) -1)*100
-d_test
+# d_test = (test.tail(-1).reset_index(drop = True)/test.head(-1).reset_index(drop = True) -1)*100
+# d_test
 
-# you can test what would happen if we wouldnt use 'reset.index(drop = True)'
-d_test_2 = (test.tail(-1) / test.head(-1) -1)*100           
-d_test_2              
+# # you can test what would happen if we wouldnt use 'reset.index(drop = True)'
+# d_test_2 = (test.tail(-1) / test.head(-1) -1)*100           
+# d_test_2              
