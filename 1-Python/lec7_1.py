@@ -25,11 +25,11 @@ data_aussen = pd.read_csv("dataforanalysis_aussen.csv", sep = ",", index_col = 0
 # print(data_xrates.D1.unique())
 
 start_year = 2000
-curr = data_xrates.D1.unique()[0] # A trick to avoid typing variable names
+curr = data_xrates.ix[:,"D1"].unique()[0] # A trick to avoid typing variable names
 trade_dir = "Ausfuhr"  
-goods_type = data_aussen.D1.unique()[0] 
+goods_type = data_aussen.ix[:,"D1"].unique()[0] 
 measure = "Wert in Millionen Franken"
-save_graph = True
+save_graph = False
 
 # new!
 data_as_change_rates = True
@@ -158,8 +158,9 @@ if save_graph:
 # Now put all the pieces together, separated by
 # underscores, which are practical for the purpose of file names
 
-	fname = "_".join([curr, trade_dir, goods_type, x])
+	fname = "_".join([curr, trade_dir, gods_type, x])
 	fname = fname.replace("/", "pro")
+	fname = "plots/" + fname
 	print(fname)
 
 
@@ -195,7 +196,8 @@ plt.plot(data[curr],
 
 
 # save our figure our folder
-plt.savefig(fname + ".png", bbox_inches='tight') 
+if save_graph:
+	plt.savefig(fname + ".png", bbox_inches='tight') 
 # the bbox setting adjusts the margins so that all text is visible
 plt.close()
 
@@ -211,7 +213,7 @@ print(results.summary())
 
 # but what if we only want one of the values at hand?
 # we can inspect the attributes and functions of the object by using the command
-print(dir(results))
+# print(dir(results))
 
 print("\n\n\n")
 

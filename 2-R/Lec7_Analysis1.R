@@ -82,7 +82,7 @@ aussen = dcast(aussen, timeID ~ D0 + D1 + D2, value.var = "Value")
 # In case you are missing stringr
 # install.packages("stringr")
 library(stringr) 
-  # library to work on character ("string") variables
+# library to work on character ("string") variables
 
 x = str_locate_all(names(aussen)[2], "_") # find ALL positions of underscores
 x[[1]]

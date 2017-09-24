@@ -9,16 +9,16 @@ rm(list = ls()) # Empty workspace to start with a "clean sheet"
 
 # REPLACE THE WORKING DIRECTORY BELOW WITH THE ONE FOR YOUR DEVICE
 #setwd("D:/Dropbox/Mac&Surf/Programmierkurs Dropb/Data")
-setwd("/Users/dominiquepaul/xJob/DataWithPythonCourse")
+setwd("/Users/dominiquepaul/xJob/1-DataWithPythonCourse/")
 
 
-load("dataForAnalysis.RData")
+load("4-Data/dataforAnalysis.RData")
 
 # NEW!!!
 # This is how you call a function that you define in a
 # separate file!
 # It's like you wrote your own "package" and call it here!!!
-source("../R_Scripts/getAnalysis.R")
+source("2-R/lec7getAnalysis.R")
 
 # Note on the path above:
 # This is the example of a RELATIVE path
@@ -45,6 +45,7 @@ getAnalysis(currency = unique(dataXrates$D1)[2],
 # call it plots
 
 typeList = unique(dataAussen$D1[dataAussen$D0 == "Ausfuhr"])
+
 # This is a list we want to loop over to get all the
 # respective plots
 # Note that not all values in dataAussen$D1 are available for 
@@ -60,18 +61,7 @@ for (i in typeList){
   )
 }
 
-
-
-
-
-
-
-
-
-
 # If you are not yet impressed, then lets expand capacity!
-
-
 currList = unique(dataXrates$D1)
 
 
@@ -94,8 +84,6 @@ for (i in currList){
     )
   }
 }
-
-
 
 # The best way to inspect the output is to open a new word document 
 # and drag the files into that document from the file explorer/finder.  
