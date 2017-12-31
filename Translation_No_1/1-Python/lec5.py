@@ -17,9 +17,9 @@ import statsmodels.formula.api as smf
 
 
 # set working directory 
-os.chdir("/Users/dominiquepaul/xJob/1-DataWithPythonCourse/4-Data/")
+os.chdir("/Users/dominiquepaul/xJob/DataWithPythonCourse1/Translation_No_1/")
 
-rawXrates = pd.read_csv('dataXrates.csv', sep = ",")
+rawXrates = pd.read_csv('4-Data/dataXrates.csv', sep = ",")
 
 
 # Referring to columns in data.frames

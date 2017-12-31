@@ -22,7 +22,6 @@ import matplotlib.pyplot as plt
 # Specifically, "for-loops" and "while-loops". In this script, we
 # consider how they work
 
-
 # A for-loop --------------------------------------------------------
 
 # We want to check whether the mean of repeated simulated draws 

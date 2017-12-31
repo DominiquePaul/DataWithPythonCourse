@@ -24,7 +24,7 @@ import pandas as pd
 import numpy as np
 import os
 
-
+#%reset
 # Header ------------------------------------------------------------------
 
 # set directory
@@ -47,6 +47,9 @@ dq["quarter"] = pd.cut(dq["month"], bins=[0, 3.5, 6.5, 9.5, 13], labels=[1,2,3,4
 
 type(dq["quarter"][0])
 
+# dropping some columns to improve legibility
+dq = dq.drop(['month', 'date_num'], axis = 1)
+
 
 
 # To see how the cut function works, consider 
@@ -65,40 +68,58 @@ check_it_out
 
 
 # Get a list of all column names
-dq.columns
-
-# We select columns 5 to 46 and send it to the
-# vars() function that packages them as arguments
-# for summarize_at().
-# (Note, you can spell summarize with an s or z,
-# R does not care, both functions do the same.)
-
-x = vars(names(Dq)[5:46])
+len(dq.columns)
 
 
-Dq = group_by(Dq,year, quarter) %>%
-  summarize_at(x, mean)
-
-# Note here some of the cool subtleties
-# of R that make it a "functional" programming
-# language. You can pass a function as an argument
-# of a function: "mean" is a function that is an
-# argument of summarize_at()!
+dq = dq.groupby(["year","quarter"]).mean().reset_index().iloc[:,:44]
 
 
-# To show the power of functional programming,
-# let's use another pair of functions.
-# The code of the second line looks rather
-# dense. I leave it to the experts among
-# you to figure out how this works :-)
-# For the others, it's good enough to 
-# understand what the code DOES, not how
-# it works.
+# We select columns 5 to 46 and summarize the columns by the periods
+# we group the values by taking their average and reset the index 
+# finally, we only select the columns we are interested in
 
-x = vars(names(Dq)[3:44])
 
-Dq <- Dq %>% mutate_at(x, funs(round(., 2)))
+# we round the values to again improve legibility
+dq = dq.round(decimals = 2)
 
 # Check out that we now have indeed quarterly data,
 # calculated as the means over 3 consecutive months!
+
+
+
+# Changing order of columns -----------------------------------------------
+
+# Finally, let's explore how we can change the order of columns. 
+
+# Get the list of all column names
+dq.columns
+
+# Selecting the columns that we want to have 
+# left-most, ordered appropriately
+first = list(dq.columns[0:2]) + list(dq.columns[42:44]) + list(dq.columns[2:42])
+
+# Then using reindex() to rearange
+dq = dq.reindex(columns = first)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

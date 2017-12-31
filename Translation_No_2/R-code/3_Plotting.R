@@ -10,6 +10,7 @@
 # Header ----------------------------------------------------------------
 
 # The header contains all the preparatory stuff
+setwd("/Users/dominiquepaul/xJob/DataWithPythonCourse1/Translation_No_2")
 
 # Load the packages
 library(tidyverse)
