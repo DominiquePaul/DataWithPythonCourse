@@ -53,7 +53,6 @@ plt.show()
 # Here is a possible solution
 
 # Create a new so-called "indicator variable". 
-# For this, the ifelse() function is very convenient.
    
 df.loc[:,"Period"] = 0
 df.loc[df["year"] < 2007, "Period"] = 1
@@ -71,18 +70,35 @@ plt.show()
         
 # Adding a legend -------------------------------------------------
 
+# There are twoi methods to create a legend
 
-# There are two methods of doing this:
+# The first is the simple way by creating the legend manually with patches
+# this works easy but can be more complicated with larger quantities
 
-# The first one is rather basic
 # we create our own legend through so-called patches 
 red_patch = mpatches.Patch(color = "red",label = "Before 2007")
 blue_patch = mpatches.Patch(color = "blue",label = "After 2007")
+# we save our individual patches as a list so we can easily 
+# reference them later
 labels = [red_patch,blue_patch]
 
 plt.scatter(df["gEUR"], df["Exp_All_R"],c = df["Period"],s = 4,cmap='bwr')
 plt.legend(handles=labels)
 plt.show()
+
+
+# The second method is the automatic but more complicated way
+# we plot the dots in iterations depending on their period labelling
+df.loc[:,"Period2"] = "After 2007"
+df.loc[df["year"] < 2007, "Period2"] = "Before 2007"    
+
+groups = df.groupby('Period2')
+for name, group in groups:
+    plt.scatter(group.gEUR, group.Exp_All_R, label = name)
+plt.legend()
+
+df = df.drop("Period2", axis = 1)
+
 
 
 # Axis labels --------------------------------------------
@@ -93,6 +109,9 @@ plt.xlabel("Change of CHF/Euro exchange rate (in %)")
 plt.ylabel("Change in total exports (in %)")
 plt.show()
 
+
+
+# we save our axes labels once so we dont have to type them every time
 xlab1 = "Change of CHF/Euro exchange rate (in %)"
 ylab1 = "Change in total exports (in %)"
 
@@ -103,21 +122,23 @@ ylab1 = "Change in total exports (in %)"
 # in our case we will use the chemistry exports column to be able to 
 # see when this might have had an impact on our results
 
-# we can also make our colours continuous depending on the date of the data pair
+# we make our colours continuous depending on the date of the data pair
+# and change the opacity of the dots with the alpha value
 
-plt.scatter(df["gEUR"], df["Exp_All_R"],c = df["date_num"],s = df["Exp_Chemistry_R"]*10,cmap='YlGn', alpha= 0.5)
+plt.scatter(df["gEUR"], 
+            df["Exp_All_R"],
+            c = df["date_num"],
+            s = df["Exp_Chemistry_R"]*10,
+            cmap='YlGn', 
+            alpha= 0.5)
 light_patch = mpatches.Patch(color = "#fafcdd",label = "2001")
 dark_patch = mpatches.Patch(color = "#7fa294",label = "2017")
-labels = [light_patch,dark_patch]
-plt.legend(handles=labels)
-plt.xlabel("Change of CHF/Euro exchange rate (in %)")
-plt.ylabel("Change in total exports (in %)")
+labels_green = [light_patch,dark_patch]
+plt.legend(handles=labels_green)
+plt.xlabel(xlab1)
+plt.ylabel(ylab1)
 plt.show()
 
-# reset patches
-red_patch = mpatches.Patch(color = "red",label = "Before 2007")
-blue_patch = mpatches.Patch(color = "blue",label = "After 2007")
-labels = [red_patch,blue_patch]
 
 
 
@@ -143,14 +164,14 @@ reg1 = scipy.stats.linregress(df["gEUR"][mask], df["Exp_All_R"][mask])
 slope, intercept = reg1[0], reg1[1]
 
 
+# lets plot our regression analysis onto the scatter plot
 plt.scatter(df["gEUR"], df["Exp_All_R"],c = df["Period"],s = 4,cmap='bwr')
+# add the regression line
 plt.plot(df["gEUR"], intercept + slope * df["gEUR"])
 plt.legend(handles=labels)
-plt.xlabel("Change of CHF/Euro exchange rate (in %)")
-plt.ylabel("Change in total exports (in %)")
+plt.xlabel(xlab1)
+plt.ylabel(ylab1)
 plt.show()
-
-
 
 
 
@@ -168,6 +189,7 @@ plt.text(0, -40, "Data source: Swiss National Bank") # add a textbox with furthe
 plt.show()
 
 
+
 # Changing the background and other features -------------------------------------------------
 
 
@@ -176,7 +198,7 @@ plt.show()
 # check out different themes here:
 # https://matplotlib.org/gallery/style_sheets/style_sheets_reference.html?highlight=style%20context
 
-# the with command allows us to maintain a certain style only for a certain block of code
+# the "with" command allows us to maintain a certain style only for a certain block of code
 # this way we dont have to reset the theme after using it once, in case we dont like it
 # amusingly, ggplot is one of the availabel themes
 
@@ -188,6 +210,7 @@ with plt.style.context(('ggplot')):
     plt.ylabel("Change in total exports (in %)")
     plt.suptitle("Surprisingly little effect", fontsize = 13) # add the big title
     plt.title("Swiss exports and the CHF/euro exchange rate", fontsize=10) # add a subtitle
+    # we can also add manual placed text boxes on our plot:
     plt.text(0, -40, "Data source: Swiss National Bank") # add a textbox with further annotations
     # the first two argument are the x and y coordinates of the text
     plt.show()
@@ -210,8 +233,10 @@ with plt.style.context(('ggplot')):
     plt.title("Swiss exports and the CHF/euro exchange rate", fontsize=10) # add a subtitle
     plt.text(0, -40, "Data source: Swiss National Bank") # add a textbox with further annotations
     # the first two argument are the x and y coordinates of the text
-    plt.savefig("Plots/ello.png")
-    plt.savefig("Plots/ello.pdf")
+    # we can save the plot as png
+    plt.savefig("Plots/plot1.png")
+    # and also as other formats such as pdf
+    plt.savefig("Plots/plot1.pdf")
 
 
 

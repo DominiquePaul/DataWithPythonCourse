@@ -5,8 +5,7 @@ Created on Sun Dec  3 15:14:42 2017
 
 @author: dominiquepaul
 """
-import pandas as pd
-import numpy as np
+
 
 
 # Description -------------------------------------------------------------
@@ -18,6 +17,9 @@ import numpy as np
 
 # Header ------------------------------------------------------------------
 
+# install.package
+import pandas as pd
+import numpy as np
 
 # Variables and their types ----------------------------
 
@@ -36,7 +38,7 @@ type(a)
 # Are there other types?
 a_as_char = "a"
 a_as_char
-## [1] "a"
+
 type(a_as_char)
 
 
@@ -54,9 +56,8 @@ k = a !=a_as_char
 
 type(h)
 
+
 # Combining single objects: Shopping Lists (1) -------------------------
-
-
 
 shop_list = ["Milk (l)", "Cereals (packs)", "Qu\u00f6llfrisch (packs)"]
 
@@ -126,7 +127,7 @@ shopping_data
 shopping_data = shopping_data.assign(exp_per_item=quant_list * price_list)
 shopping_data
 
-# Two ways of getting rid of a colum
+# Three ways of getting rid of a colum
 
 D1 = shopping_data.loc[:, # this means that we select all rows
 ["quant_list", "price_list"]] # this selects the columns we want
@@ -135,6 +136,9 @@ D1 = shopping_data.loc[:, # this means that we select all rows
 D2 = shopping_data.loc[:, # we again select all rows
 shopping_data.columns != 'exp_per_item'] # we select all columns which are not "exp_per_item"
 # This is far more elegant if you drop just a few columns!
+
+# dropping a column by name
+D3 = shopping_data.drop("shop_list", axis = 1)
 
 # Now we also apply this to the shopping_data
 shopping_data = shopping_data.loc[:,shopping_data.columns != 'exp_per_item']
@@ -164,7 +168,7 @@ my_list = [
   shopping_data_aug
 ]
 
-# different that in R, lists elements do not have key names but are indexed with numbers
+# different than in R, lists elements do not have key names but are indexed with numbers
 # starting at 0. This means that the first element can be accessed by my_list[0]
 
 my_list[0]

@@ -28,7 +28,7 @@ from ggplot import *
 #from ggplot import aes, ggplot, geom_point, geom_line, labs 
 
 # set directory
-os.chdir("/Users/dominiquepaul/xJob/DataWithPythonCourse1/Translation_No_2")
+os.chdir("/Users/dominiquepaul/xJob/DataWithPythonCourse1/Translation_No_2/")
 
 # Load the data that we prepared in 2_DataBasics.R
 df = pd.read_pickle("Data/TradeEx_tidy.pkl")
@@ -51,7 +51,6 @@ ggplot(df, aes(x = "gEUR", y = "Exp_All_R")) +\
 # Here is a possible solution
 
 # Create a new so-called "indicator variable". 
-# For this, the ifelse() function is very convenient.
    
 df.loc[:,"Period"] = 0
 df.loc[df["year"] < 2007, "Period"] = 1
@@ -64,18 +63,17 @@ ggplot(aes("gEUR", "Exp_All_R", color = "Period"), df) +\
 # Factors and visualizing group membership -------------------------------------------------
 
 
-# It does not look too bad, but the legend reveals that
-# Python ggplot does not quite exactly what we want...
+# It does not look too bad
+# Differing to the R package we see that the Python package of ggplot behaves
+# differently and leads to the same result as when we use boolean 
+# indicator variables
 
 type(df["Period"][0])
 # Period is a numerical variable
 
-# We actually want Period to be a categorical variable.
+# We will make Period a categorical variable.
 # That's something else than just character. 
 # As you may imagine, there is a data type for this.
-
-# For this, we use the forcats package (see header).
-# Read about this in Chapter 12.
 
 df.loc[:,"Period"] = False
 df.loc[df["year"] < 2007, "Period"] = True
@@ -83,8 +81,6 @@ df.loc[df["year"] < 2007, "Period"] = True
         
 ggplot(aes("gEUR", "Exp_All_R", color = "Period"), df) +\
     geom_point()
-
-# This looks more like what we wanted!
 
 
 # Let's make the legend nicer

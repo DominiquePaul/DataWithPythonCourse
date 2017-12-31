@@ -28,6 +28,9 @@
 # Try to understand how this data is organized.
 
 
+# Good idea to always first clear all data that are 
+# still in the working space to start with a clean sheet:
+#%reset
 
 # Packages ------------------------------------------------------------------
 
@@ -47,12 +50,12 @@ import matplotlib.pyplot as plt
 # Reading data into R ----------------------------------------------------------------
 
 # change this to your directory
-os.chdir("/Users/dominiquepaul/xJob/4-New R translation/")
+os.chdir("/Users/dominiquepaul/xJob/DataWithPythonCourse1/Translation_No_2/")
 
 # Discussion and solution of above
 
 # First idea to read data:
-#pd.read_csv("snb-data-devkum-en-selection-20171002_1430.csv")
+pd.read_csv("snb-data-devkum-en-selection-20171002_1430.csv")
 
 # Second idea:
 pd.read_csv("Data/snb-data-devkum-en-selection-20171002_1430.csv")
@@ -73,7 +76,7 @@ test = pd.read_table("Data/snb-data-devkum-en-selection-20171002_1430.csv",sep="
 # delete variable from environment
 del(test)
 
-after1 = 1 
+
 # Assignment: Read more data ----------------------------------------
 
 # Use google to find the OECD data platform.
@@ -116,13 +119,18 @@ x_rates0["D0"].unique()
 set(x_rates0["D0"])
 # a set is like a list, but unordered and withour replications
 
+# pandas data frames are made up individual (pandas) series, another data type
+
 
 # D0 is a very boring column that does not contain valuable
 # info (it means that the data contains monthly averages.)
 # So we just drop it...
 
 # Drop D0
-x_rates = x_rates0.loc[:, x_rates0.columns != "D0"]
+x_rates = x_rates0.drop("D0", axis = 1)
+
+# or:
+#x_rates = x_rates0.loc[:, x_rates0.columns != "D0"]
 
 # What values are in D1?
 x_rates["D1"].unique()
@@ -137,6 +145,9 @@ x_rates["D1"].unique()
 # to EUR and USD observations (the 1 in EUR1 etc. means
 # that the exchange rate is *1* EUR per 1 CHF).
 
+# the command compares whether each row value for the D1 column
+# is matches our list representing the dollar and the euro. If so, it is 
+# copied, if not then it is skipped
 x_rates = x_rates.loc[x_rates.loc[:,"D1"].isin(["USD1", "EUR1"])]
 
 # the .isin(values) method checks whether the column values match the one of the values

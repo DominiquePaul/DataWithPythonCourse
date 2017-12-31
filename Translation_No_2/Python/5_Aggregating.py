@@ -72,8 +72,6 @@ len(dq.columns)
 
 
 dq = dq.groupby(["year","quarter"]).mean().reset_index().iloc[:,:44]
-
-
 # We select columns 5 to 46 and summarize the columns by the periods
 # we group the values by taking their average and reset the index 
 # finally, we only select the columns we are interested in

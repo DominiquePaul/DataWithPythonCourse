@@ -5,6 +5,10 @@ Created on Fri Dec  8 14:07:51 2017
 
 @author: dominiquepaul
 """
+
+#%reset
+
+
 # Packages -----------------------------------------------------
 import numpy as np
 import pandas as pd
@@ -31,7 +35,7 @@ import matplotlib.pyplot as plt
 
 # Here is how you can simulate data
 x = np.random.normal(10, #mu 
-                 11, #sigma
+                 11, #standard deviation
                  1) # amount of numbers to be created
 # this creates a random number following a normal distribution
 
@@ -173,11 +177,19 @@ y = y.iloc[0:i,:]
 y.tail(10)
 
 
-xlab1 = "Draw(s)"; ylab1 = "Value"
+xlab1, ylab1 = "Draw(s)","Value"
 
+
+plt.scatter(y["id"],y["sample_list"], c = "blue", alpha=0.3)
+plt.plot(y["id"],y["sample_list"],c = "blue", ms=0.2, alpha=0.3)
+plt.plot(y["id"],y["sample_mean_list"], c="#f9362f", linewidth=1.4)
+plt.xlabel(xlab1)
+plt.ylabel(ylab1)
 
 # What does this graph show?
 # What does the alpha do?
+
+
 plt.plot(y["id"],y["sample_mean_list"], c = "red", linewidth = 1.2)
 plt.plot(y["id"],y["theory_mean_list"], c = "black", linewidth = 2)
 plt.xlabel(xlab1)
@@ -189,8 +201,8 @@ plt.title("The mean approaches its theoretical value")
 # Only the last N observations to study convergence in detail
 N = 100
 
-plt.plot(y["id"][-N:],y["sample_mean_list"][-N:], c = "red", linewidth = 1.2)
-plt.plot(y["id"][-N:],y["theory_mean_list"][-N:], c = "black", linewidth = 2)
+plt.plot(y["id"][-N:],y["sample_mean_list"][-N:], c="red", linewidth = 1.2)
+plt.plot(y["id"][-N:],y["theory_mean_list"][-N:], "--",c="black", linewidth = 2)
 plt.xlabel(xlab1)
 plt.ylabel(ylab1)
 plt.title("The mean approaches its theoretical value")
@@ -329,7 +341,7 @@ plt.show()
 
 
 
-# A fully-fledge graph ----------------------------------------------------
+# A fully-fledged graph ----------------------------------------------------
 
 
 # In complete analogy to the toy version above
