@@ -7,8 +7,7 @@ the development of model as it passes through several iterations
 from sklearn import datasets
 from sklearn.utils import shuffle
 import pandas as pd
-
-eta = 0.01   # The learning rate
+import numpy as np
 
 perc_train = 0.7 # the training set size as percentage of overall set
 
@@ -55,9 +54,8 @@ class perceptron(object):
     -----------
     w_ : weight array
     """
-    eta = 0
     
-    def __init__(self,eta):
+    def __init__(self,eta = 0.01):
         self.eta = eta
         
     

@@ -10,7 +10,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-eta = 0.01   # The learning rate
 
 perc_train = 0.7 # the training set size as percentage of overall set
 
@@ -45,6 +44,9 @@ training_set_iris = data2.iloc[0:round(perc_train*len(data2)),:]
 test_set_iris = data2.iloc[round(perc_train*len(data2)):,:]
 
 
+# Create the class for our ML object ------------------------------------------
+
+
 class perceptron(object):
     """
     Parameters
@@ -59,12 +61,9 @@ class perceptron(object):
                     process
     weightsdf_ : data frame describing the development of the weights during the learning process. 
                     Is later merged into bookkeeping_
-    
     """
-    
-    eta = 0
-    
-    def __init__(self,eta):
+
+    def __init__(self,eta = 0.01):
         self.eta = eta
         
     
@@ -106,6 +105,10 @@ class perceptron(object):
         prediction = np.where(index > 0, 1, -1)
         return prediction
         
+    
+    
+# use the class ---------------------------------------------------------------
+
 # initiate and train the model
 x = perceptron(0.01)
 x.fit(training_set_iris.iloc[:,0:2].values,training_set_iris.iloc[:,2].values)
