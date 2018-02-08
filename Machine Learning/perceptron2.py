@@ -116,13 +116,13 @@ evaluation["result"] = np.where(evaluation["Target"] == x.predict(test_set_iris.
 evaluation
 
 # examine the development over time
-x.bookkeeping
+x.bookkeeping_
 
 
 # examine development of weights via graph
-plt.plot(x.bookkeeping["iter"], x.bookkeeping.ix[:,4])
-plt.plot(x.bookkeeping["iter"], x.bookkeeping.ix[:,5])
-plt.plot(x.bookkeeping["iter"], x.bookkeeping.ix[:,6])
+plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.ix[:,4])
+plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.ix[:,5])
+plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.ix[:,6])
 plt.title("Development of the weights")
 plt.xlabel("Iterations")
 plt.ylabel("Values")

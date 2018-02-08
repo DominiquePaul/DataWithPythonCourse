@@ -25,16 +25,13 @@ Created on Tue Dec  5 18:06:25 2017
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import scipy.stats
-import numpy as np
- 
+import matplotlib as mpl
 # set directory
 os.chdir("/Users/dominiquepaul/xJob/DataWithPythonCourse1/Translation_No_2/")
 
 # Load the data that we prepared in 2_DataBasics.R
 df = pd.read_pickle("Data/TradeEx_tidy.pkl")
-
 
 
 
@@ -72,15 +69,21 @@ plt.show()
 
 # There are twoi methods to create a legend
 
-# The first is the simple way by creating the legend manually with patches
-# this works easy but can be more complicated with larger quantities
 
-# we create our own legend through so-called patches 
-red_patch = mpatches.Patch(color = "red",label = "Before 2007")
-blue_patch = mpatches.Patch(color = "blue",label = "After 2007")
+# the first method works by manually assigning the labels for the legend
+# Normally the legend handle (the sign in the legend) and legend label (text)
+# are automatically assigned when plotting and can then be called via
+# the plt.legend() function. 
+# We change the plotted legend by manually assigning the legend handles
+
+# in this line we create an empty plot which we use to reference as constituting 
+# the information of the legend to be called later
+handle_before_2007 = plt.scatter([],[], color='r', label = "Before 2007")
+handle_after_2007 = plt.scatter([],[], color='b', label = "After 2007")
+
 # we save our individual patches as a list so we can easily 
 # reference them later
-labels = [red_patch,blue_patch]
+labels = [handle_before_2007,handle_after_2007]
 
 plt.scatter(df["gEUR"], df["Exp_All_R"],c = df["Period"],s = 4,cmap='bwr')
 plt.legend(handles=labels)
@@ -100,7 +103,6 @@ plt.legend()
 df = df.drop("Period2", axis = 1)
 
 
-
 # Axis labels --------------------------------------------
 
 plt.scatter(df["gEUR"], df["Exp_All_R"],c = df["Period"],s = 4,cmap='bwr')
@@ -116,6 +118,8 @@ xlab1 = "Change of CHF/Euro exchange rate (in %)"
 ylab1 = "Change in total exports (in %)"
 
 
+
+
 # other options with MPL:
 
 # we can also change the size of the dots depending on a third factor: 
@@ -125,21 +129,41 @@ ylab1 = "Change in total exports (in %)"
 # we make our colours continuous depending on the date of the data pair
 # and change the opacity of the dots with the alpha value
 
-plt.scatter(df["gEUR"], 
+# We will also create a colour bar on the side
+# you can read the exact instructions here: 
+# https://matplotlib.org/examples/api/colorbar_only.html
+
+# first split our plot into subplots:
+# we call them ax1 and ax2
+# we split our plotting space into a 10x10 matrix and define how we want to 
+# allocate the space for the two subplots
+# read more here: https://matplotlib.org/users/gridspec.html
+ax1 = plt.subplot2grid((10, 10), (0, 0), colspan=8, rowspan=10)
+ax2 = plt.subplot2grid((10, 10), (0, 9), colspan=1, rowspan= 10)
+
+# we can now plot the data. The procedure is the same. 
+# We merely replace "plt" with "ax1"
+ax1.scatter(df["gEUR"], 
             df["Exp_All_R"],
             c = df["date_num"],
-            s = df["Exp_Chemistry_R"]*10,
+            s = df["Exp_Chemistry_R"]*5,
             cmap='YlGn', 
             alpha= 0.5)
-light_patch = mpatches.Patch(color = "#fafcdd",label = "2001")
-dark_patch = mpatches.Patch(color = "#7fa294",label = "2017")
-labels_green = [light_patch,dark_patch]
-plt.legend(handles=labels_green)
-plt.xlabel(xlab1)
-plt.ylabel(ylab1)
+
+# we will now create our legend as a colourbar to show the continous data
+
+cmap = mpl.cm.YlGn #this sets our chosen color map type
+# we normalize our the colour bar values according to our data
+norm = mpl.colors.Normalize(vmin=min(df["date_num"]), vmax=max(df["date_num"]))
+
+# create the colour bar: 
+cb1 = mpl.colorbar.ColorbarBase(ax2, # where do we plot to
+                                cmap=cmap, # which colour map we are using
+                                norm=norm, # normalized data
+                                orientation='vertical') # orientation
+# optional: set a label to the legend
+# cb1.set_label('Date of data')
 plt.show()
-
-
 
 
 # Visualizing statistical relationship between two variables ------------------
@@ -155,9 +179,13 @@ df["gEUR"].head()
 # looking at the data we see we have a nan values, which stop scipy from making a regression
 # we can easily elimiate these with a mask though
 
-# ~is the same as "is not" as we are looking for the rows were both columns have a value unequal to nan
-mask = ~np.isnan(df["gEUR"]) & ~np.isnan(df["Exp_All_R"])
-reg1 = scipy.stats.linregress(df["gEUR"][mask], df["Exp_All_R"][mask])
+# we save our original data frame and copy selected columns where 
+# we then drop all nan values. This is needed for the regression function
+df_original = df
+df = df_original[["gEUR","Exp_All_R","Period"]]
+df = df.dropna(axis = 0, how = "any")
+
+reg1 = scipy.stats.linregress(df["gEUR"], df["Exp_All_R"])
 # we get an object with containg multiple attributes regarding our regression analysis
 
 # we need the slope and the intercept:
@@ -244,8 +272,9 @@ with plt.style.context(('ggplot')):
 
 
 # as mentioned above: we can use regression analysis to extract useful information from our data
-mask = ~np.isnan(df["gEUR"]) & ~np.isnan(df["Exp_All_R"])
-reg1 = scipy.stats.linregress(df["gEUR"][mask], df["Exp_All_R"][mask])
+df = df_original[["gEUR","Exp_All_R"]]
+df = df.dropna(axis = 0, how = "any")
+reg1 = scipy.stats.linregress(df["gEUR"], df["Exp_All_R"])
 
 # but this data contains more than just the slope and intercept for a regression line
 # we can either print out everything at once:

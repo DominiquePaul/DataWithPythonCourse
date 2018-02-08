@@ -148,7 +148,6 @@ x_rates["D1"].unique()
 # the command compares whether each row value for the D1 column
 # is matches our list representing the dollar and the euro. If so, it is 
 # copied, if not then it is skipped
-x_rates = x_rates.loc[x_rates.loc[:,"D1"].isin(["USD1", "EUR1"])]
 
 # the .isin(values) method checks whether the column values match the one of the values
 # in our list of possible values
