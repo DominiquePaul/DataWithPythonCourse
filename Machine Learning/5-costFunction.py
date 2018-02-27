@@ -14,6 +14,7 @@ Created on Sun Feb 25 11:15:15 2018
 
 # Header ------------------------------------------------------------------
 import pandas as pd
+from mpl_toolkits.mplot3d import Axes3D
 from sklearn import preprocessing
 import numpy as np
 import matplotlib.pyplot as plt
