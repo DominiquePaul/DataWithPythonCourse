@@ -172,38 +172,8 @@ l1_lin = c0 - eta*sum(grad0*grad0)
 col_ind = 1
 
 
-############################
-# Arrows option 1 
-############################
-"""
-from matplotlib.patches import FancyArrowPatch
-from mpl_toolkits.mplot3d import proj3d
 
-class Arrow3D(FancyArrowPatch):
-    def __init__(self, xs, ys, zs, *args, **kwargs):
-        FancyArrowPatch.__init__(self, (0,0), (0,0), *args, **kwargs)
-        self._verts3d = xs, ys, zs
-
-    def draw(self, renderer):
-        xs3d, ys3d, zs3d = self._verts3d
-        xs, ys, zs = proj3d.proj_transform(xs3d, ys3d, zs3d, renderer.M)
-        self.set_positions((xs[0],ys[0]),(xs[1],ys[1]))
-        FancyArrowPatch.draw(self, renderer)
-
-# The 3D plot for the cost function
-fig = plt.figure()
-ax = fig.gca(projection='3d')
-surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
-                       alpha = 0.7, antialiased=False)
-a = Arrow3D([weights0[0], weights1[0]], [weights0[1], weights1[1]],[c0, l1_lin], mutation_scale=20,lw=3, arrowstyle="-|>", color="r")
-ax.add_artist(a)
-
-plt.show()
-"""
-
-############################
-# Arrows option 2
-############################
+# Adding Arrows 
 
 fig = plt.figure()
 ax = fig.gca(projection='3d')
@@ -211,7 +181,7 @@ surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
                        alpha = 0.6, antialiased=False)
 ax.plot([weights0[0], weights1[0]], [weights0[1], weights1[1]], [c0, l1_lin], color='red', alpha=0.8, lw=3)
 
-# plt.show()
+plt.show()
 
 # The new point is actually below the surface of the cost function,
 # as we go down straight and the surface is concave.
