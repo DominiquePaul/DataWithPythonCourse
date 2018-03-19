@@ -133,6 +133,9 @@ Y = pd.DataFrame({"iter": np.arange(1,len(train_set)+1), "falPos": false_positiv
 
 result = pd.merge(Y, weights,on = "iter")
 
+train_diag = ["false positives: " + str(false_positives), " false negatives: " + str(false_negatives), " misclas: "  + str(misclas)]
+# Plotting the learning process (training) -------------------------------------------
+
 
 plt.plot(result["iter"], result["misclas"], label = "Misclassified (all, in %)", c = "blue", alpha = 0.3)
 plt.plot(result["iter"], result["falPos"], label = "False positives (in %)", c = "red", alpha = 0.3)
@@ -146,8 +149,6 @@ plt.suptitle("Adaline learning: Training (WDBC data)", size = 14)
 plt.title(("Learning rate = ", eta, ", ", perc_train*100, " % of sample used for training"), size = 7)
 #plt.savefig("plots/Adaline_training.png")
 plt.show()
-
-
 
 
 # Testing/evaluation ------------------------------------------------------
@@ -177,7 +178,7 @@ false_positives = round(sum(x) / len(test_set["labels"][test_set["labels"] == -1
 x = np.where((train_set["prediction"] == -1) & (train_set["labels"] == 1),1,0)
 false_negatives = round(sum(x) / len(train_set["labels"][train_set["labels"] == 1]) * 100, 1)
 
-test_diag = [false_positives, false_negatives, misclas]
+test_diag = ["false positives: " + str(false_positives), " false negatives: " + str(false_negatives), " misclas: "  + str(misclas)]
 
 # The critical value for classifying a flower is
 # w0 + w1x1 + w2x2 = 0. Solve this for x2:
@@ -198,14 +199,53 @@ plt.show()
 
 # A more sophisticated plot -----------------------------------------------
 
-    np.array([0])
 # No need to understand the details here!
 
+ # Create a preliminary ggplot to get the axis ranges
+fig, ax = plt.subplots()
+ax.scatter(test_set["perimeterM"],test_set["concaveM"])
+fig.show()
+
+ylims = ax.get_ylim()
+xlims = ax.get_xlim()
+
+# For the background, generate a large data grid
+xgrid = np.arange(xlims[0], xlims[1], (xlims[1] - xlims[0]) / 219.9)
+ygrid = np.arange(ylims[0], ylims[1], (ylims[1] - ylims[0]) / 220)
+nx = len(xgrid)
+ny = len(ygrid)
 
 
+xgrid = np.repeat(xgrid, ny)
+ygrid = np.tile(ygrid, nx)
+len(xgrid)
+len(ygrid)
 
+to_paint = pd.DataFrame(data = {"xgrid":xgrid, "ygrid":ygrid})
+to_paint["index"] = w[0] + w[1] * xgrid + w[2] * ygrid
+to_paint["prediction"] = np.where(to_paint["index"] >= 0,"1","-1")
+to_paint["colour"] = np.where(to_paint["index"] >= 0,"#f79999","#9ed9f7")
 
+# some comment amigo 
 
+fig, ax = plt.subplots()
+ax.set_xlim(xlims[0], xlims[1])
+ax.set_ylim(ylims[0], ylims[1])
+#ax.scatter(to_paint["xgrid"],to_paint["ygrid"], color = to_paint["prediction"] )
+#ax.scatter(test_set["perimeterM"],test_set["concaveM"])
+for label,df in to_paint.groupby("prediction"):
+    ax.scatter(df["xgrid"],df["ygrid"], color=df["colour"], label =label)
+for label,df in test_set.groupby("diagnosis"):
+    ax.scatter(df["perimeterM"],df["concaveM"],c= df["diagnosis"], label =label)
+    
+ax.legend()
+ 
+train_diag
+test_diag
 
-
+plt.savefig("plots/Adaline_training.png")
+ 
+ 
+ 
+ 
 

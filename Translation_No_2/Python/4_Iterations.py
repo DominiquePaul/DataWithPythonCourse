@@ -285,7 +285,6 @@ for name, group in groups:
 plt.legend(title= "Legend")
 plt.show()
 
-
 # We still want to make this look nicer, by pickig colors manually
 # and selecting specific linetypes.
 # Let's look at this with only two series
