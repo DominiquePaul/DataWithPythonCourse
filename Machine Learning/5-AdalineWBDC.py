@@ -226,19 +226,22 @@ to_paint["index"] = w[0] + w[1] * xgrid + w[2] * ygrid
 to_paint["prediction"] = np.where(to_paint["index"] >= 0,"1","-1")
 to_paint["colour"] = np.where(to_paint["index"] >= 0,"#f79999","#9ed9f7")
 
-# some comment amigo 
+
+
+# And here the fully-fledged plot with background coloring
 
 fig, ax = plt.subplots()
 ax.set_xlim(xlims[0], xlims[1])
 ax.set_ylim(ylims[0], ylims[1])
-#ax.scatter(to_paint["xgrid"],to_paint["ygrid"], color = to_paint["prediction"] )
-#ax.scatter(test_set["perimeterM"],test_set["concaveM"])
 for label,df in to_paint.groupby("prediction"):
     ax.scatter(df["xgrid"],df["ygrid"], color=df["colour"], label =label)
 for label,df in test_set.groupby("diagnosis"):
     ax.scatter(df["perimeterM"],df["concaveM"],c= df["diagnosis"], label =label)
-    
 ax.legend()
+plt.xlabel("Perimeter (mean)")
+plt.ylabel("Concavity (mean)")
+plt.suptitle("Perceptron learning: testing results (WDBC data)", size = 12)
+plt.title("Learning rate = {}, {} % of sample used for training".format(eta, perc_train*100), size = 9)
  
 train_diag
 test_diag
