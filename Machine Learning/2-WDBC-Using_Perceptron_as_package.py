@@ -46,6 +46,9 @@ wdbc = shuffle(wdbc, random_state = 1).reset_index().drop(["index"],axis=1)
 training_set_wdbc = wdbc.iloc[0:round(perc_train*len(wdbc)),:]
 test_set_wdbc = wdbc.iloc[round(perc_train*len(wdbc)):,:]
 
+# we need to replace the 0 labels by -1 labels for the code to work
+training_set_wdbc.iloc[:,2].replace([0],[-1], inplace = True)
+test_set_wdbc.iloc[:,2].replace([0],[-1], inplace = True)
 
                           
 ######################################################
@@ -55,11 +58,11 @@ test_set_wdbc = wdbc.iloc[round(perc_train*len(wdbc)):,:]
 # we can easily reference the object and create an instance as follows:
 x = perc.perceptron(0.01)
 x.fit(training_set_wdbc.iloc[:,3:33].values, training_set_wdbc.iloc[:,2].values)
- 
+
 # Thats it! using the code as a package saves us a lot of time!
 
 # Lets check how well the perceptron algorithm performs on the wdbc data
-evaluation = test_set_wdbc
+evaluation = test_set_wdbc.copy()
 evaluation["result"] = np.where(evaluation.iloc[:,2] == x.predict(test_set_wdbc.iloc[:,3:33].values), 1, 0)
 corrects = evaluation["result"].sum()
 estimations_made = len(evaluation["result"])

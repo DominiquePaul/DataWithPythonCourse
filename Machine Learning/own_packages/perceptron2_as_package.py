@@ -42,11 +42,12 @@ def prepare_iris_data():
     #split the set into training and test set
     training_set_iris = data2.iloc[0:round(perc_train*len(data2)),:]
     test_set_iris = data2.iloc[round(perc_train*len(data2)):,:]
+    return(training_set_iris, test_set_iris)
 
 
 # Create the class for our ML object ------------------------------------------
 def test_package():
-    print("test worked")
+    print("package works")
 
 class perceptron(object):
     """
@@ -83,19 +84,19 @@ class perceptron(object):
             self.w_[1:] += update * features_i
 
             # do the bookkeeping_
-            self.bookkeeping_.ix[self.iteration-1,"iter"] = self.iteration
+            self.bookkeeping_.loc[self.iteration-1,"iter"] = self.iteration
             mistakes = sum(np.where(y == self.predict(training_set),0,1))/len(training_set)
-            self.bookkeeping_.ix[self.iteration-1,"misclas"] = mistakes
+            self.bookkeeping_.loc[self.iteration-1,"misclas"] = mistakes
 
             # false positives
             false_positives = sum(np.where((self.predict(training_set) == 1) & (y == -1) ,1,0))/ np.sum(np.array(y) == -1)
-            self.bookkeeping_.ix[self.iteration-1,"false_positives"] = false_positives
+            self.bookkeeping_.loc[self.iteration-1,"false_positives"] = false_positives
             # false negatives
             false_negatives = sum(np.where((self.predict(training_set) == -1) & (y == 1),1,0))/ np.sum(np.array(y) == 1)
-            self.bookkeeping_.ix[self.iteration-1,"false_negatives"] = false_negatives
+            self.bookkeeping_.loc[self.iteration-1,"false_negatives"] = false_negatives
 
             for i in np.arange(0,training_set.shape[1]+1,1):
-                self.weightsdf_.ix[self.iteration-1,i] = self.w_[i]
+                self.weightsdf_.loc[self.iteration-1,i] = self.w_[i]
 
             self.iteration += 1
 
@@ -125,9 +126,9 @@ def execute_code():
 
 
     # examine development of weights via graph
-    plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.ix[:,4])
-    plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.ix[:,5])
-    plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.ix[:,6])
+    plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.loc[:,4])
+    plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.loc[:,5])
+    plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.loc[:,6])
     plt.title("Development of the weights")
     plt.xlabel("Iterations")
     plt.ylabel("Values")

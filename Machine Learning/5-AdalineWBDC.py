@@ -49,8 +49,8 @@ wdbc = wdbc.sample(frac = 1, # determines the fraction of the values returned
                    
 # We select a percentage of the sample for training
 split = round(perc_train * len(wdbc))
-train_set = wdbc[0:split]
-test_set = wdbc[split:]
+train_set = wdbc[0:split].copy()
+test_set = wdbc[split:].copy()
 
 n_train = len(train_set)
 

@@ -24,14 +24,14 @@ data.columns = ["Sepal_length", "Petal_length","Target"]
 
 
 # add new column for text labelling of flower
-data["Type"] = data["Target"]
-data["Type"].replace([0,1,2], ["Setosa","Versicolor","Virginica"], inplace = True)
+data.loc[:,"Type"] = data["Target"]
+data.loc[:,"Type"].replace([0,1,2], ["Setosa","Versicolor","Virginica"], inplace = True)
 
 # Delete all virginica rows
 data1 = data.loc[data.loc[:,"Type"].isin(["Setosa","Versicolor"])]
 
 # change target values in our data from 0/1 to -1/1
-data1["Target"].replace([0],[-1], inplace=True)
+data1.loc[:,"Target"].replace([0],[-1], inplace=True)
 data1
 
 #shuffle data set
@@ -78,6 +78,18 @@ x = perceptron(0.01)
 x.fit(training_set_iris.iloc[:,0:2].values,training_set_iris.iloc[:,2].values)
 
 # apply to the testing set 
-evaluation = test_set_iris
-evaluation["result"] = np.where(evaluation["Target"] == x.predict(test_set_iris.iloc[:,0:2]), "correct", "false")
+evaluation = test_set_iris.copy()
+evaluation.result = np.where(evaluation.loc[:,"Target"] == x.predict(test_set_iris.iloc[:,0:2]), "correct", "false")
 evaluation
+
+
+
+
+
+
+
+
+
+
+
+

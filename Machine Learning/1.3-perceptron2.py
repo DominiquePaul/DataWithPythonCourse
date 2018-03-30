@@ -25,11 +25,11 @@ data.columns = ["Sepal_length", "Petal_length","Target"]
 
 
 # add new column for text labelling of flower
-data["Type"] = data["Target"]
-data["Type"].replace([0,1,2], ["Setosa","Versicolor","Virginica"], inplace = True)
+data.loc[:,"Type"] = data.loc[:,"Target"]
+data.loc[:,"Type"].replace([0,1,2], ["Setosa","Versicolor","Virginica"], inplace = True)
 
 # Delete all virginica rows
-data1 = data.loc[data.loc[:,"Type"].isin(["Setosa","Versicolor"])]
+data1 = data.loc[data.loc[:,"Type"].isin(["Setosa","Versicolor"])].copy()
 
 #
 data1["Target"].replace([0],[-1], inplace=True)
@@ -81,19 +81,19 @@ class perceptron(object):
             self.w_[1:] += update * features_i
 
             # do the bookkeeping_
-            self.bookkeeping_.ix[self.iteration-1,"iter"] = self.iteration
+            self.bookkeeping_.loc[self.iteration-1,"iter"] = self.iteration
             mistakes = sum(np.where(y == self.predict(training_set),0,1))/len(training_set)
-            self.bookkeeping_.ix[self.iteration-1,"misclas"] = mistakes
+            self.bookkeeping_.loc[self.iteration-1,"misclas"] = mistakes
 
             # false positives
             false_positives = sum(np.where((self.predict(training_set) == 1) & (y == -1) ,1,0))/ np.sum(np.array(y) == -1)
-            self.bookkeeping_.ix[self.iteration-1,"false_positives"] = false_positives
+            self.bookkeeping_.loc[self.iteration-1,"false_positives"] = false_positives
             # false negatives
             false_negatives = sum(np.where((self.predict(training_set) == -1) & (y == 1),1,0))/ np.sum(np.array(y) == 1)
-            self.bookkeeping_.ix[self.iteration-1,"false_negatives"] = false_negatives
+            self.bookkeeping_.loc[self.iteration-1,"false_negatives"] = false_negatives
 
             for i in np.arange(0,training_set.shape[1]+1,1):
-                self.weightsdf_.ix[self.iteration-1,i] = self.w_[i]
+                self.weightsdf_.loc[self.iteration-1,i] = self.w_[i]
 
             self.iteration += 1
 
@@ -113,7 +113,7 @@ x = perceptron(0.01)
 x.fit(training_set_iris.iloc[:,0:2].values,training_set_iris.iloc[:,2].values)
 
 # apply to the testing set
-evaluation = test_set_iris
+evaluation = test_set_iris.copy()
 evaluation["result"] = np.where(evaluation["Target"] == x.predict(test_set_iris.iloc[:,0:2]), "correct", "false")
 evaluation
 
@@ -122,9 +122,9 @@ print(x.bookkeeping_)
 
 
 # # examine development of weights via graph
-# plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.ix[:,4])
-# plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.ix[:,5])
-# plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.ix[:,6])
+# plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.loc[:,4])
+# plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.loc[:,5])
+# plt.plot(x.bookkeeping_["iter"], x.bookkeeping_.loc[:,6])
 # plt.title("Development of the weights")
 # plt.xlabel("Iterations")
 # plt.ylabel("Values")
