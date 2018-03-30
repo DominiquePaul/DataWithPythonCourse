@@ -204,7 +204,6 @@ plt.show()
  # Create a preliminary ggplot to get the axis ranges
 fig, ax = plt.subplots()
 ax.scatter(test_set["perimeterM"],test_set["concaveM"])
-fig.show()
 
 ylims = ax.get_ylim()
 xlims = ax.get_xlim()
