@@ -28,7 +28,7 @@ data.loc[:,"Type"] = data["Target"]
 data.loc[:,"Type"].replace([0,1,2], ["Setosa","Versicolor","Virginica"], inplace = True)
 
 # Delete all virginica rows
-data1 = data.loc[data.loc[:,"Type"].isin(["Setosa","Versicolor"])]
+data1 = data.loc[data.loc[:,"Type"].isin(["Setosa","Versicolor"])].copy()
 
 # change target values in our data from 0/1 to -1/1
 data1.loc[:,"Target"].replace([0],[-1], inplace=True)
