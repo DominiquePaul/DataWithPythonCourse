@@ -7,7 +7,7 @@ import colorama
 from colorama import Fore, Back, Style
 
 
-os.chdir("/Users/dominiquepaul/xJob/1-DataWithPythonCourse/4-Data/")
+os.chdir("/Users/dominiquepaul/xJob/DataWithPythonCourse1/Translation_No_1/4-Data")
 
 data_xrates = pd.read_csv("dataforanalysis_xrates.csv", sep = ",", index_col = 0)
 data_aussen = pd.read_csv("dataforanalysis_aussen.csv", sep = ",", index_col = 0)
