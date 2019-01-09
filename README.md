@@ -1,6 +1,8 @@
-# Data Science Fundamentals Course: Python Scripts
+<img src="https://siaw.unisg.ch/-/media/538460c65a8e4a018d00ee8b97bf8709.jpg" alt="SIAW logo" width="200" align="right">
 
-This repository contains Python scripts I wrote (/"translated" from R into Python) for the Data Science Fundamentals course taught at the Universtiy of St. Gallen by Professor Johannes Binswanger in Fall 2017 and Fall 2018. 
+# Data Science Fundamentals: Python Scripts
+
+This repository contains Python and R scripts I wrote (/"translated" from R into Python) for the Data Science Fundamentals course taught at the Universtiy of St. Gallen by Professor Johannes Binswanger in Fall 2017 and Fall 2018. 
 
 The Repository is divided into three parts: 
 <ul>
