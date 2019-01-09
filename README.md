@@ -12,4 +12,6 @@ The Repository is divided into three parts:
 </ul>
 
 
-If you have any questions about the code please feel free to reach out me at: dominique.c.a.paul@gmail.com
+---
+
+If you have any questions about the code or the files included please feel free to reach out to me at: dominique.c.a.paul@gmail.com
