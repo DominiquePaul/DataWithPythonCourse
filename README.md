@@ -4,7 +4,7 @@ This repository contains Python scripts I wrote (/"translated" from R into Pytho
 
 The Repository is divided into three parts: 
 <ul>
-  <li> Translation no. 1: Basic Python scripts introducing the students to the language
-  <li> Translation no. 2: Python scripts going beyond the very basics of the language and adding some more advanced concepts
-  <li> Machine Learning: Machine Learning scripts written in Python covering loss functions, normal and stochastic gradient descent, the perceptron algorithm, and the Adaline algorithm. 
+  <li> <b>Translation no. 1:</b> Basic Python scripts introducing the students to the language
+  <li> <b>Translation no. 2:</b> Python scripts going beyond the very basics of the language and adding some more advanced concepts
+  <li> <b>Machine Learning:</b> Machine Learning scripts written in Python covering loss functions, normal and stochastic gradient descent, the perceptron algorithm, and the Adaline algorithm. 
 </ul>
