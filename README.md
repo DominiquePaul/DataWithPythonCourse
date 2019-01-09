@@ -8,3 +8,6 @@ The Repository is divided into three parts:
   <li> <b>Translation no. 2:</b> Python scripts going beyond the very basics of the language and adding some more advanced concepts
   <li> <b>Machine Learning:</b> Machine Learning scripts written in Python covering loss functions, normal and stochastic gradient descent, the perceptron algorithm, and the Adaline algorithm. 
 </ul>
+
+
+If you have any questions about the code please feel free to reach out me at: dominique.c.a.paul@gmail.com
