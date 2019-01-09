@@ -1,4 +1,4 @@
-# DataWithPythonCourse
+# Data Science Fundamentals Course: Python Scripts
 
 This repository contains Python scripts I wrote (/"translated" from R into Python) for the Data Science Fundamentals course taught at the Universtiy of St. Gallen by Professor Johannes Binswanger in Fall 2017 and Fall 2018. 
 
